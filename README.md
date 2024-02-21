@@ -12,4 +12,9 @@ Aplikasi Galery foto ini adalah aplikasi berbasis web yang memungkinkan pengguna
 - Mencari foto berdasarkan judul
 # Cara menginstal 
 Ikuti langkah-langkah berikut untuk menginstall aplikasi:
+1. Clone repositori ini dengan menjalankan perintah berikut di terminal Anda:
+2. git clone https://github.com/dilnur03/galeryfoto.git
+3. Masuk ke direktori proyek dengan:
+cd galeryfoto
+
 
