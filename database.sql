@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 19, 2024 at 03:40 AM
+-- Generation Time: Mar 02, 2024 at 05:08 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -40,9 +40,11 @@ CREATE TABLE `album` (
 --
 
 INSERT INTO `album` (`AlbumID`, `NamaAlbum`, `Deskripsi`, `UserID`, `created_at`) VALUES
-(1, 'Makanan', 'Favorit', 6, '2024-02-01 02:48:47'),
-(4, 'frdd', 'wwwwwwww', 6, '2024-02-11 09:28:20'),
-(6, 'gunung', 'aaaaaaaaaaaaaaaaaa', 5, '2024-02-16 01:36:53');
+(6, 'gunung', 'aaaaaaaaaaaaaaaaaa', 5, '2024-02-16 01:36:53'),
+(18, 'random', 'random', 6, '2024-02-21 05:47:41'),
+(19, 'panorama', 'panorama alam', 11, '2024-02-21 05:56:08'),
+(21, 'gunung', 's', 4, '2024-02-26 05:14:17'),
+(22, 'panorama', 'n', 9, '2024-02-28 12:50:10');
 
 -- --------------------------------------------------------
 
@@ -66,14 +68,15 @@ CREATE TABLE `foto` (
 --
 
 INSERT INTO `foto` (`FotoID`, `JudulFoto`, `DeskripsiFoto`, `TanggalUnggah`, `LokasiFile`, `AlbumID`, `UserID`, `created_at`) VALUES
-(2, 'halo', 'halo', '2024-01-20', '01gvm9yfm4x00399venaphhpen.jpg', 23, 6, '2024-02-07 04:03:33'),
-(36, 'test', 'ddddddddd', '2024-02-14', '381297979.jpg', 1, 6, '2024-02-14 21:58:17'),
-(38, 'halo', '5', '2024-02-16', '1ad3c21e-88fe-4008-b7bf-675ec52c7cff.jpg', 4, 6, '2024-02-16 01:58:11'),
-(42, 'a', 'aaaaa', '2024-02-18', 'ec53a8cd-25f9-4766-87f5-51f74a07738a.jpg', 1, 6, '2024-02-18 07:05:39'),
-(43, 'dds', 'ssssss', '2024-02-18', 'colorful-transparent-of-speech-label-png.webp', 1, 6, '2024-02-18 07:09:42'),
-(49, 'halo', 'j', '2024-02-19', '1feee791-4031-4760-80a7-8bf56d9aa4dc.jpg', 4, 6, '2024-02-19 01:14:12'),
-(50, 'buah coklat', 'jjj', '2024-02-19', 'ac721d74-4bdb-4015-a238-b5130eef28ec.jpg', 1, 6, '2024-02-19 02:05:10'),
-(51, 'test', 'qqqqq', '2024-02-19', 'IMG_20231001_152648.jpg', 1, 6, '2024-02-19 02:06:14');
+(91, 'test', 'gyy', '2024-03-01', 'bde28975c9daca8e611e5276f1412620.jpg', 0, 6, '2024-03-01 06:31:27'),
+(92, 'halo', 'alam', '2024-03-01', '4f90c0bf652a6ec82eec8a6385a68a34.jpg', 0, 6, '2024-03-01 06:32:07'),
+(93, 'test', 'yu', '2024-03-01', 'cd89b617dc03e76c3ce1b2d68ffbe896.jpg', 0, 6, '2024-03-01 06:32:52'),
+(95, 'pemandangan', 'cantikkk', '2024-03-01', '01fa652f2779f406a787e9ad96ad9b2c.jpg', 0, 15, '2024-03-01 06:37:27'),
+(96, 'Alam', 'Cantik sekaliii', '2024-03-01', '629ab79b2a852819233fb235435e0cbb.jpg', 0, 15, '2024-03-01 06:38:17'),
+(97, 'laut6', 'laut pangandaran', '2024-03-01', 'fd05e968e961a926a7f8b914054552d0.jpg', 0, 15, '2024-03-01 06:39:31'),
+(98, 'air', 'suci', '2024-03-01', 'bbe871aa81241edb7593227bc0e640f9.jpg', 0, 9, '2024-03-01 06:41:18'),
+(99, 'senja', 'disore hari', '2024-03-01', 'f076c82a54f24ad6742a833ece90d99f.jpg', 0, 9, '2024-03-01 06:42:19'),
+(100, 'foto', 'foto', '2024-03-01', 'fd05e968e961a926a7f8b914054552d0.jpg', 0, 6, '2024-03-01 07:31:49');
 
 -- --------------------------------------------------------
 
@@ -108,7 +111,18 @@ INSERT INTO `komentarfoto` (`KomentarID`, `FotoID`, `UserID`, `IsiKomentar`, `Ta
 (11, 36, 4, 'p', '2024-02-16', '2024-02-16 12:04:25'),
 (12, 42, 6, 'p', '2024-02-19', '2024-02-19 01:10:51'),
 (13, 49, 11, '', '2024-02-19', '2024-02-19 02:30:53'),
-(14, 49, 11, 'bagus', '2024-02-19', '2024-02-19 02:31:23');
+(14, 49, 11, 'bagus', '2024-02-19', '2024-02-19 02:31:23'),
+(15, 66, 6, 'waduh', '2024-02-20', '2024-02-20 01:27:35'),
+(16, 51, 6, 'stoberi yang segar', '2024-02-20', '2024-02-20 02:22:30'),
+(17, 67, 4, 'pp', '2024-02-20', '2024-02-20 10:55:28'),
+(19, 81, 4, 'u', '2024-02-24', '2024-02-24 09:04:11'),
+(29, 85, 9, 'p', '2024-02-28', '2024-02-28 06:02:22'),
+(30, 85, 9, 'i', '2024-02-28', '2024-02-28 06:02:30'),
+(42, 81, 6, 'dfffgg', '2024-02-29', '2024-02-29 02:09:42'),
+(45, 78, 9, '123', '2024-03-01', '2024-03-01 01:53:29'),
+(46, 82, 9, 'p', '2024-03-01', '2024-03-01 06:23:46'),
+(48, 98, 15, 'sangat tidak pantas', '2024-03-01', '2024-03-01 06:47:41'),
+(49, 90, 15, 'jelek banget', '2024-03-01', '2024-03-01 07:33:29');
 
 -- --------------------------------------------------------
 
@@ -180,7 +194,29 @@ INSERT INTO `likefoto` (`LikeID`, `FotoID`, `UserID`, `created_at`) VALUES
 (188, 37, 4, '0000-00-00 00:00:00'),
 (190, 36, 4, '0000-00-00 00:00:00'),
 (191, 36, 6, '0000-00-00 00:00:00'),
-(194, 49, 11, '0000-00-00 00:00:00');
+(194, 49, 11, '0000-00-00 00:00:00'),
+(201, 49, 6, '0000-00-00 00:00:00'),
+(202, 50, 6, '0000-00-00 00:00:00'),
+(204, 66, 6, '0000-00-00 00:00:00'),
+(213, 83, 6, '0000-00-00 00:00:00'),
+(214, 83, 11, '0000-00-00 00:00:00'),
+(215, 76, 11, '0000-00-00 00:00:00'),
+(217, 72, 6, '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `report`
+--
+
+CREATE TABLE `report` (
+  `report_id` int(11) NOT NULL,
+  `type` enum('foto','komentar','','') NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `FotoID` int(11) NOT NULL,
+  `reason` text NOT NULL,
+  `reportedat` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -204,11 +240,15 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`UserID`, `username`, `password`, `Email`, `Nama_Lengkap`, `Alamat`, `role`, `created_at`) VALUES
-(4, 'lol', '$2y$10$ZP/iO5GWWVXF9RpMuQ0/x.5lduxjx7cY9d31/5ZTE4jANN4wCz2z.', 'll@gmail.com', 'test', 'Aula Fakultas Teknik Universitas Mayasari bakti kampus 2', 'admin', '2024-01-30 07:56:49'),
+(4, 'admin', '$2y$10$ZP/iO5GWWVXF9RpMuQ0/x.5lduxjx7cY9d31/5ZTE4jANN4wCz2z.', 'll@gmail.com', 'test', 'Aula Fakultas Teknik Universitas Mayasari bakti kampus 2', 'admin', '2024-02-20 12:30:27'),
 (6, 'dila1', '$2y$10$L5wmte26g6SUJvXJLr/8NuaMR2EH.eeM3YiEP5/nMRvSBFYp32q9i', 'dilanurhidayah209@gmail.com', 'dila Nurhidayah', 'Neglasari', 'user', '2024-02-08 03:02:07'),
 (9, 'nur', '$2y$10$pzbcoXylH6vI1XiexYqeG.HsH8LgFq7nUW/BvUAeLyEM/y6idpeCi', 'dilanurhidayah209@gmail.com', 'nurhidayah', 'Banjar', 'user', '2024-02-14 04:54:29'),
-(10, 'test', '$2y$10$Yfrqv5P8FraFdqXKosmGx.FLp8nwBzeuIqY86rrobSeY.XsQTHhYi', 'admin@admin.com', 'qqqqs', 'sssss', 'user', '2024-02-19 02:15:52'),
-(11, 'darsu', '$2y$10$mK.70EmXvTD4SlmvAdgYtuc7zv4yTXZ5wKosVnXtD8JLLEbNz4LZS', 'admin@admin.com', 'darsu', 'darsu', 'user', '2024-02-19 02:29:56');
+(11, 'darsu', '$2y$10$mK.70EmXvTD4SlmvAdgYtuc7zv4yTXZ5wKosVnXtD8JLLEbNz4LZS', 'admin@admin.com', 'darsu', 'darsu', 'user', '2024-02-19 02:29:56'),
+(12, 'ridwan', '$2y$10$MWBRIiN2n7l7SuygFa7iIOl5Y0zDEpyJcn9FsLFXWuVLbwgiFqLEG', 'kodarismaaris061@gmail.com', 'Ridwan', 'Banjar', 'user', '2024-02-19 02:42:10'),
+(13, 'jirah', '$2y$10$sRbXqJMuoAYqc4nrE3k0nepT8B3mZcTCLb.RDNBBkNhvtIlzmoh02', 'jirah@gmail.com', 'nurssuik', 'Aula Fakultas Teknik Universitas Mayasari bakti kampus 2', 'user', '2024-02-20 01:13:19'),
+(14, 'nu', '', 'di3l@gmail.com', 'nuni', 'Aula Fakultas Teknik Universitas Mayasari bakti kampus 2', 'user', '2024-02-20 01:45:04'),
+(15, 'alfiyah', '$2y$10$2qE/oZ3gepK3QLzYRDjmA.ApUMucugJYVN6tXuLN.5gM5YJpDW4Aa', 'saifuddin@gmail.com', 'Azizah', 'Cikadu', 'user', '2024-03-01 06:34:56'),
+(16, 'salsa', '$2y$10$6PAgsCxmIL.a79FUtSOiROYozgXGul488PVdiT1ZOCCyAkgsY8waO', 'salsa@gmail.com', 'Salsa Rizky', 'Neglasari', 'user', '2024-03-01 13:05:21');
 
 --
 -- Indexes for dumped tables
@@ -239,6 +279,12 @@ ALTER TABLE `likefoto`
   ADD PRIMARY KEY (`LikeID`);
 
 --
+-- Indexes for table `report`
+--
+ALTER TABLE `report`
+  ADD PRIMARY KEY (`report_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -252,31 +298,37 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `album`
 --
 ALTER TABLE `album`
-  MODIFY `AlbumID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `AlbumID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `foto`
 --
 ALTER TABLE `foto`
-  MODIFY `FotoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `FotoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `komentarfoto`
 --
 ALTER TABLE `komentarfoto`
-  MODIFY `KomentarID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `KomentarID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `likefoto`
 --
 ALTER TABLE `likefoto`
-  MODIFY `LikeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
+  MODIFY `LikeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
+
+--
+-- AUTO_INCREMENT for table `report`
+--
+ALTER TABLE `report`
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
