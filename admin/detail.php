@@ -17,9 +17,6 @@ $data = mysqli_fetch_assoc($result);
 
 
 
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +29,7 @@ $data = mysqli_fetch_assoc($result);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Detail foto</title>
 
     <!-- Custom fonts for this template-->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -44,6 +41,7 @@ $data = mysqli_fetch_assoc($result);
 
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
         body {
@@ -396,19 +394,29 @@ $data = mysqli_fetch_assoc($result);
                 
              
 
-                <body class="font-mono bg-gray-400">
+              
     <!-- Container -->
     <div class="container mx-auto">
+        
         <div class="flex justify-center px-6 my-12">
+            
             <!-- Row -->
             <div class="w-full xl:w-3/4 lg:w-11/12 flex">
+                
                 <!-- Col -->
                 <div class="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg img-container">
+                    
                     <img src="../img/<?= $data['LokasiFile']?>" alt="">
                 </div>
-                <!-- Col 2 -->
-                <div class="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
-                
+                <div class="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none relative">
+                    
+                <div style='width:100%; position: relative;' class='d-flex flex-row-reverse'>
+    <i id="dropdownIcon" class="fa-solid fa-ellipsis-vertical" onclick="toggleDropdown()"></i>
+    <!-- Dropdown Menu -->
+    <div id="myDropdown" class="dropdown-content">
+    <a href="#" onclick="confirmDelete()">Hapus</a>
+    </div>
+</div>
                     
     
                         <div class="mb-4">
@@ -561,10 +569,16 @@ $data = mysqli_fetch_assoc($result);
 
     while ($comment = mysqli_fetch_assoc($commentResult)) {
         ?>
-        <div class="mb-2">
-            <span class="font-bold"><?= $comment['username'] ?>:</span>
-            <p class="text-gray-700"><?= $comment['IsiKomentar'] ?></p>
-        </div>
+      <div class="mb-2">
+    <span class="font-bold"><?= $comment['username'] ?>:</span>
+    <p class="text-gray-700"><?= $comment['IsiKomentar'] ?></p>
+    <!-- Tombol Hapus Komentar -->
+    <form action="hapuskomentar.php" method="post">
+        <input type="hidden" name="comment_id" value="<?= $comment['KomentarID'] ?>">
+        <button type="submit" class="text-red-500">Hapus</button>
+    </form>
+</div>
+
         <?php
     }
     ?>
@@ -656,6 +670,63 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+<script>
+    // Fungsi untuk menampilkan atau menyembunyikan dropdown
+    function toggleDropdown() {
+        var dropdown = document.getElementById("myDropdown");
+        if (dropdown.style.display === "block") {
+            dropdown.style.display = "none";
+        } else {
+            dropdown.style.display = "block";
+        }
+    }
+
+    // Tutup dropdown ketika pengguna mengklik di luar dropdown
+    window.onclick = function(event) {
+        if (!event.target.matches('#dropdownIcon')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.style.display === "block") {
+                    openDropdown.style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+<script>
+    // Fungsi untuk menampilkan popup konfirmasi
+    function confirmDelete() {
+        if (confirm('Apakah Anda yakin ingin menghapus foto ini?')) {
+            deletePhoto();
+        }
+    }
+
+    // Fungsi untuk mengirim permintaan penghapusan foto ke server menggunakan AJAX
+    function deletePhoto() {
+        // Mengambil ID foto dari URL
+        var fotoID = <?= $id ?>;
+
+        // Mengirim permintaan AJAX
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "hapusfotosemua.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Jika penghapusan berhasil, alihkan pengguna ke halaman admin.php
+                    window.location.href = "admin.php";
+                } else {
+                    // Jika terjadi kesalahan saat menghapus, tampilkan pesan kesalahan
+                    alert('Terjadi kesalahan saat menghapus foto.');
+                }
+            }
+        };
+        xhr.send("fotoID=" + fotoID);
+    }
+</script>
 
 </body>
 </html>

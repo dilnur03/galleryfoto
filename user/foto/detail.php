@@ -15,11 +15,6 @@ where foto.FotoID=$id");
 $data = mysqli_fetch_assoc($result);
 
 
-
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +27,7 @@ $data = mysqli_fetch_assoc($result);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Detail foto</title>
 
     <!-- Custom fonts for this template-->
     <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -44,6 +39,7 @@ $data = mysqli_fetch_assoc($result);
 
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
         body {
@@ -303,7 +299,66 @@ $data = mysqli_fetch_assoc($result);
     display: block;
 }
 
- 
+.dropdown-box {
+    display: inline-block;
+    position: relative;
+}
+
+.dropdown-menu-komen {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+    z-index: 1000;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-item:hover {
+    background-color: #f5f5f5;
+}
+
+.dropdownfoto {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+    .dropdownfoto ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .dropdownfoto ul li {
+        padding: 5px 0;
+    }
+
+    .dropdownfoto ul li a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .dropdownfoto ul li a:hover {
+        color: #555;
+    }
+
+    .dropdownfoto.show {
+        display: block;
+    }
     </style>
 
     
@@ -335,7 +390,7 @@ $data = mysqli_fetch_assoc($result);
                         <a href='datafoto.php'>Foto</a>
                     </li>
                     <li class="nav-item">
-                        <a href='../album/album.php'>Album</a>
+                        <a href='album.php'>Album</a>
                     </li>
                 </ul>
 
@@ -396,19 +451,55 @@ $data = mysqli_fetch_assoc($result);
                 
              
 
-                <body class="font-mono bg-gray-400">
+              
     <!-- Container -->
     <div class="container mx-auto">
+        
         <div class="flex justify-center px-6 my-12">
+            
             <!-- Row -->
             <div class="w-full xl:w-3/4 lg:w-11/12 flex">
+                
                 <!-- Col -->
                 <div class="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg img-container">
+                    
                     <img src="../../img/<?= $data['LokasiFile']?>" alt="">
                 </div>
-                <!-- Col 2 -->
-                <div class="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">
-                
+                <div class="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none relative">
+                    
+                <div style='width:100%; position: relative;' class='d-flex flex-row-reverse'>
+    
+    <!-- Dropdown Menu -->
+    <?php
+// Tambahkan kode berikut untuk menentukan apakah pengguna yang mengakses halaman adalah pengguna yang mengunggah foto atau pengguna lain
+$uploaderID = $data['UserID']; // ID pengguna yang mengunggah foto
+$currentUserID = $_SESSION["UserID"]; // ID pengguna yang sedang login
+$isUploader = ($currentUserID == $uploaderID);
+
+// Gunakan variabel $isUploader untuk menentukan jenis dropdown yang akan ditampilkan
+?>
+
+<!-- Di bagian dropdown, gunakan logika if untuk menampilkan dropdown yang sesuai -->
+<?php if ($isUploader): ?>
+    <!-- Dropdown untuk pengguna yang mengunggah foto -->
+    <div class="dropdownfoto hidden">
+        <ul>
+            <li><a href="edit.php">Edit</a></li>
+            <li><a href="hapus.php">Hapus</a></li>
+        </ul>
+    </div>
+<?php else: ?>
+    <i class="fa-solid fa-ellipsis-vertical" id="dropdownToggle"></i>
+    <!-- Dropdown untuk pengguna lain -->
+    <div class="dropdownfoto hidden">
+        <ul>
+        <a href="reportfoto.php?id=<?php echo $id?> " class="dropdown-item">Laporkan foto</a>
+
+        </ul>
+    </div>
+<?php endif; ?>
+
+</div>
                     
     
                         <div class="mb-4">
@@ -495,20 +586,21 @@ $data = mysqli_fetch_assoc($result);
     <!-- Like Text and Comment Icon -->
     <span class="ml-2 text-sm text-gray-700">
         <?= mysqli_num_rows($getlike) ?> Likes
-        
+            <!-- Komentar Icon -->
+
 
 <?php 
     $checkresult = mysqli_query($conn,"SELECT * FROM foto WHERE AlbumID <> 0 AND FotoID = $id");
     if(mysqli_num_rows($checkresult)>0){
 ?>
 <div class="" style="display: inline-block;">
-    <form id="addToAlbumForm" method="post" action="prosesalbum.php">
+    <form style="display:flex;flex-direction:row;justify-content:between" id="addToAlbumForm" method="post" action="prosesalbum.php">
         <!-- Input hidden untuk menyimpan ID foto -->
         <input type="hidden" name="fotoID" value="<?= htmlspecialchars($_GET['id'] ?? '') ?>">
         <!-- Input hidden untuk menyimpan ID album yang dipilih -->
         <input type="hidden" id="selectedAlbumID" name="albumID" value="">
                 <button type="submit" name='bookmark' class="dropbtn">
-                    <i class="far fa-bookmark" style="background-color: black;"></i>
+                    <i class="far fa-bookmark" style="background-color: black;" ></i>
                 </button>
     </form>
 </div>
@@ -551,7 +643,7 @@ $data = mysqli_fetch_assoc($result);
 
                         <!-- Comment Section -->
                        <!-- Comment Section -->
-<div class="mb-4">
+                       <div class="mb-4">
     <h2 class="text-xl font-bold mb-2">Komentar</h2>
 
     <?php
@@ -560,30 +652,59 @@ $data = mysqli_fetch_assoc($result);
 
     while ($comment = mysqli_fetch_assoc($commentResult)) {
         ?>
-        <div class="mb-2">
-            <span class="font-bold"><?= $comment['username'] ?>:</span>
+        <div class="mb-2 relative">
+            <span class="font-bold"><?= $comment['username'] ?></span>
+            <div style="width:100%; position: relative;" class="d-flex flex-row-reverse">
+                <div class="dropdown-box">
+                    <?php if ($comment['UserID'] == $_SESSION["UserID"]) { ?>
+                        <!-- Tampilkan dropdown untuk pengguna yang berkomentar -->
+                        <i id="dropdownkomen" class="fa-solid fa-ellipsis-vertical"></i>
+                        <div id="customDropdownkomen" class="dropdown-menu-komen" style="display: none;">
+                           <!-- Di dalam while loop -->
+                           <div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <!-- Tempat untuk menampilkan form edit -->
+  </div>
+</div>
+<a href="editkomentar.php?CommentID=<?= $comment['KomentarID'] ?>" class="dropdown-item">Edit</a>
+
+                            <?php if ($comment['UserID'] == $_SESSION["UserID"]) { ?>
+                                <form method="post" action="hapuskomentar.php" onsubmit="return confirmDelete();">
+    <input type="hidden" name="comment_id" value="<?= $comment['KomentarID'] ?>">
+    <input type="hidden" name="id_page" value="<?= $_GET['id'] ?>">
+    <button type="submit" class="dropdown-item">Hapus</button>
+</form>
+
+            <?php } ?>
+
+                        </div>
+                    <?php } else { ?>
+                        <!-- Tampilkan dropdown untuk pengguna lain yang berkomentar -->
+                        <i id="dropdownkomen" class="fa-solid fa-ellipsis-vertical"></i>
+                        <div id="customDropdownkomen" class="dropdown-menu-komen" style="display: none;">
+                            <a href="report.php?id=<?php echo $id?> " class="dropdown-item">Laporkan Komentar</a>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
             <p class="text-gray-700"><?= $comment['IsiKomentar'] ?></p>
         </div>
-        <?php
-    }
-    ?>
+    <?php } ?>
 
     <!-- Comment Form -->
     <form action='komentar.php' method="post">
-
-<div class="mb-2">
-    <label class="block text-sm font-bold text-gray-700" for="comment">Tambahkan Komentar :</label>
-    <textarea class="w-full h-20 px-3 py-2 border rounded-md" id="comment" name="comment" placeholder="Tulis komentar Anda"></textarea>
-    <input type='hidden' name='fotoID' value="<?= $id ?>" />
-    <input type='hidden' name='userID' value="<?= $_SESSION["UserID"] ?>" />
-    <!-- Hapus kelas text-white untuk mengubah warna teks tombol menjadi hitam -->
-    <button class=" px-4 py-2 rounded-md hover:bg-blue-600" style="color: #2b6cb0;" type="submit">Kirim Komentar</button>
+        <div class="mb-2">
+            <label class="block text-sm font-bold text-gray-700" for="comment">Tambahkan Komentar :</label>
+            <textarea class="w-full h-20 px-3 py-2 border rounded-md" id="comment" name="comment" placeholder="Tulis komentar Anda"></textarea>
+            <input type='hidden' name='fotoID' value="<?= $id ?>" />
+            <input type='hidden' name='userID' value="<?= $_SESSION["UserID"] ?>" />
+            <!-- Hapus kelas text-white untuk mengubah warna teks tombol menjadi hitam -->
+            <button class=" px-4 py-2 rounded-md hover:bg-blue-600" style="color: #2b6cb0;" type="submit">Kirim Komentar</button>
+        </div>
+    </form>
 </div>
 
-</form>
-
-
-</div>
 
                     
                 </div>
@@ -610,7 +731,7 @@ $data = mysqli_fetch_assoc($result);
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="../beranda.php">Logout</a>
+                    <a class="btn btn-primary" href="../../dashboard/guset.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -656,7 +777,57 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+<script>
+    // Menambahkan event listener untuk klik pada ikon ellipsis
+    var dropdownIcons = document.querySelectorAll('.fa-ellipsis-vertical');
+    dropdownIcons.forEach(function(icon) {
+        icon.addEventListener('click', function(event) {
+            // Mengambil dropdown yang terkait dengan ikon yang diklik
+            var dropdown = this.nextElementSibling;
+            // Mengubah tampilan dropdown menjadi block jika semula none, atau sebaliknya
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            // Mencegah event klik dari menyebabkan event bubbling
+            event.stopPropagation();
+        });
+    });
+
+    // Menambahkan event listener untuk menutup dropdown saat dokumen diklik di luar dropdown
+    document.addEventListener('click', function(event) {
+        var dropdowns = document.querySelectorAll('.dropdown-menu-komen');
+        dropdowns.forEach(function(dropdown) {
+            // Menutup dropdown jika tampilan dropdown adalah block dan elemen yang diklik bukanlah dropdown
+            if (dropdown.style.display === 'block' && !event.target.closest('.dropdown-box')) {
+                dropdown.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var dropdownToggle = document.getElementById("dropdownToggle");
+        var dropdownMenu = document.querySelector(".dropdownfoto");
+
+        // Menambahkan event listener untuk mengatasi klik pada ikon titik tiga
+        dropdownToggle.addEventListener("click", function() {
+            dropdownMenu.classList.toggle("show");
+        });
+
+        // Menambahkan event listener untuk menutup dropdown saat mengklik di luar dropdown
+        document.addEventListener("click", function(event) {
+            if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove("show");
+            }
+        });
+    });
+</script>
+<script>
+    // Function untuk menampilkan konfirmasi sebelum menghapus komentar
+    function confirmDelete() {
+        return confirm("Apakah Anda yakin ingin menghapus komentar ini?");
+    }
+</script>
+
+<script></script>
 </body>
 </html>
-
-

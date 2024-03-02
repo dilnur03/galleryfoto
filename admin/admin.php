@@ -136,6 +136,11 @@ if(isset($_GET['search_submit'])) {
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Data User
                                 </a>
+                                <a class="dropdown-item" href="datalaporan.php">
+    <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
+    Data Laporan
+</a>
+
 
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="../dashboard/guset.php" data-toggle="modal" data-target="#logoutModal">
