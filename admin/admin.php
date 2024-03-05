@@ -37,6 +37,15 @@ if(isset($_GET['search_submit'])) {
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <style>
+    .navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* ensure the navbar is above other content */
+    }
+    #content {
+        margin-top: 100px; /* Adjust this value based on your navbar's height */
+    }
     .photo-container {
         width: 100%;
         columns: 5;
@@ -119,6 +128,7 @@ if(isset($_GET['search_submit'])) {
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+                    <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow">
@@ -137,9 +147,9 @@ if(isset($_GET['search_submit'])) {
                                     Data User
                                 </a>
                                 <a class="dropdown-item" href="datalaporan.php">
-    <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
-    Data Laporan
-</a>
+                                <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Data Laporan
+                                </a>
 
 
                                 <div class="dropdown-divider"></div>
@@ -214,6 +224,23 @@ if(isset($_GET['search_submit'])) {
             </div>
         </div>
     </div>
+    
+    <script>
+    // Function to scroll to the top of the page smoothly
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Adding click event listener to the scroll-to-top button
+    document.querySelector('.scroll-to-top').addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default behavior of anchor link
+        scrollToTop(); // Call the scrollToTop function
+    });
+</script>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"></script>

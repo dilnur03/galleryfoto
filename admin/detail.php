@@ -382,6 +382,15 @@ $data = mysqli_fetch_assoc($result);
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="datauser.php">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Data User
+                                </a>
+                                <a class="dropdown-item" href="datalaporan.php">
+                                 <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Data Laporan
+                                </a>
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -569,13 +578,13 @@ $data = mysqli_fetch_assoc($result);
 
     while ($comment = mysqli_fetch_assoc($commentResult)) {
         ?>
-      <div class="mb-2">
+<div class="mb-2">
     <span class="font-bold"><?= $comment['username'] ?>:</span>
     <p class="text-gray-700"><?= $comment['IsiKomentar'] ?></p>
     <!-- Tombol Hapus Komentar -->
     <form action="hapuskomentar.php" method="post">
         <input type="hidden" name="comment_id" value="<?= $comment['KomentarID'] ?>">
-        <button type="submit" class="text-red-500">Hapus</button>
+        <button type="button" class="text-red-500" id="hapusButton">Hapus</button>
     </form>
 </div>
 
@@ -726,6 +735,15 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         xhr.send("fotoID=" + fotoID);
     }
+</script>
+
+<script>
+    document.getElementById("hapusButton").addEventListener("click", function() {
+        if(confirm("Apakah Anda yakin ingin menghapus komentar ini?")) {
+            // Lanjutkan untuk menghapus komentar jika pengguna menekan OK di kotak konfirmasi
+            this.closest("form").submit();
+        }
+    });
 </script>
 
 </body>

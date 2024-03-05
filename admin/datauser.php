@@ -56,6 +56,15 @@ function ambilSemuauser() {
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <style>
+        .navbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000; /* ensure the navbar is above other content */
+        }
+        #content {
+            margin-top: 100px; /* Adjust this value based on your navbar's height */
+        }
         /* CSS for User Data Table */
         .container {
             width: 100%;
@@ -153,6 +162,7 @@ function ambilSemuauser() {
                 </form>
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
+                <div class="topbar-divider d-none d-sm-block"></div>
                     <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -168,6 +178,10 @@ function ambilSemuauser() {
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Data User
                             </a>
+                            <a class="dropdown-item" href="datalaporan.php">
+                                 <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Data Laporan
+                                </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="../logout.php" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -186,8 +200,8 @@ function ambilSemuauser() {
                     </div>
                 <?php endif; ?>
                 <!-- Button to add user -->
-                <?php if ($_SESSION['role'] === 'admin') : ?>
-                    <a href="tambahuser.php" class="btn btn-primary mb-3">Tambah User</a>
+               <?php if ($_SESSION['role'] === 'admin') : ?>
+                    <!-- <a href="tambahuser.php" class="btn btn-primary mb-3">Tambah User</a> -->
                 <?php endif; ?>
                 <!-- User data table -->
                 <table class="table mt-4">
@@ -256,6 +270,21 @@ function ambilSemuauser() {
             </div>
         </div>
     </div>
+    <script>
+    // Function to scroll to the top of the page smoothly
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Adding click event listener to the scroll-to-top button
+    document.querySelector('.scroll-to-top').addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default behavior of anchor link
+        scrollToTop(); // Call the scrollToTop function
+    });
+</script>
     <!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -5,6 +5,7 @@ include "../koneksi.php";
 // Fetch photos from the database
     $sql = "SELECT * FROM foto ORDER BY TanggalUnggah DESC";
     $result = mysqli_query($conn, $sql);
+    
 
 ?>
 <!DOCTYPE html>
@@ -97,7 +98,7 @@ include "../koneksi.php";
         }
         /* Dropdown styles */
 
-        .dropdown {
+        .dropdown1 {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -209,6 +210,10 @@ include "../koneksi.php";
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Data User
                                 </a>
+                                <a class="dropdown-item" href="datalaporan.php">
+                                    <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Data Laporan
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="../logout.php" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -233,8 +238,8 @@ include "../koneksi.php";
     <!-- PHP loop to display albums -->
     <?php
     // Fetch album data from the database
-    $id = $_SESSION['UserID'];
-    $sql = "SELECT * FROM album WHERE UserID = $id";
+
+    $sql = "SELECT * FROM album ";
     $result = mysqli_query($conn, $sql);
 
     // Loop through each row in the result set
@@ -261,13 +266,13 @@ include "../koneksi.php";
         echo "</a>"; // Closing link tag
 
         // Dropdown menu
-        echo "<div class='dropdown' style='position: absolute; top: 5px; right: 5px;'>"; // Opening dropdown div
+        echo "<div class='dropdown1' style='position: absolute; top: 5px; right: 5px;'>"; // Opening dropdown div
         echo "<span class='dropdown-icon' onclick='toggleDropdown(this)'>&#8942;</span>"; // Dropdown toggle icon
         echo "<div class='dropdown-content'>"; // Opening dropdown content div
-        echo "<a href='edit.php?AlbumID=" . $row['AlbumID'] . "'>Edit</a>"; // Edit option
+    
 
 
-        echo "<a href='#' onclick='hapusAlbum(" . $row['AlbumID'] . ")'>Delete</a>"; // Delete option
+        echo "<a href='#' onclick='hapusAlbum(" . $row['AlbumID'] . ")'>Hapus</a>"; // Delete option
         echo "</div>"; // Closing dropdown content div
         echo "</div>"; // Closing dropdown div
 

@@ -128,6 +128,10 @@ $allReports = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Data User
                             </a>
+                            <a class="dropdown-item" href="datalaporan.php">
+                                 <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Data Laporan
+                                </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="../logout.php" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -168,8 +172,8 @@ $allReports = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <td><?= $report['reason']; ?></td>
                     <td><?= $report['reportedat']; ?></td>
                     <td>
-                        <a href="detail.php?id=<?= $report['FotoID']; ?>" class="btn btn-info">View</a>
-                        <button class="btn btn-danger" onclick="deleteReport(<?= $report['report_id']; ?>)">Delete</button>
+                        <a href="detail.php?id=<?= $report['FotoID']; ?>" class="btn btn-info">Lihat</a>
+                        <button class="btn btn-danger" onclick="deleteReport(<?= $report['report_id']; ?>)">Hapus</button>
                     </td>
                 </tr>
             <?php endforeach; ?>

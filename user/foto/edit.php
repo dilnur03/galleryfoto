@@ -28,9 +28,10 @@ if(isset($_GET['FotoID'])) {
 
 
 function ambilSemuaAlbum() {
-    global $conn;
+    global $conn, $userID;
 
-    $query = "SELECT * FROM album";
+    // Ubah query untuk hanya mengambil album yang dibuat oleh pengguna dengan UserID yang sesuai
+    $query = "SELECT * FROM album WHERE UserID = $userID";
     $result = mysqli_query($conn, $query);
 
     if (!$result) {
@@ -84,7 +85,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,7 +96,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Edit Foto</title>
+    <title>Foto</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
+
     <style>
         /* Styling for the entire form */
 /* Styling for the entire form */
@@ -143,64 +153,151 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 /* Optional: Add some additional styling for a cleaner look */
-body {
-    font-family: 'Nunito', sans-serif;
-    background-color: #ececec;
-}
-img{
-    max-width: 100px;
-    min-width: 100px;
-    min-height: 100px;
-}
-
 
 
     </style>
 
 </head>
-
 <body>
-    <!-- Content Wrapper -->
-   
 
-            <form method="POST" action="" enctype="multipart/form-data" class="form-tambah-foto">
+<!-- Content Wrapper -->
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+            <!-- Sidebar Toggle (Topbar) -->
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- Gallery Title -->
+            <h2 class="gallery-title text-primary">Gallery Foto</h2>
+
+            <ul style='display:flex;gap:1em;list-style:none;align-items:center;top:5px;position:relative'>
+                <li class="nav-item">
+                    <a href='../beranda.php'>Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a href='datafoto.php'>Foto</a>
+                </li>
+                <li class="nav-item">
+                    <a href='../album/album.php?userid='>Album</a>
+                </li>
+            </ul>
+
+        
+
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+
+                <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                <li class="nav-item dropdown no-arrow">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $_SESSION['username']  ?></span>
+                        <img class="img-profile rounded-circle"
+                             src="../../img/undraw_profile.svg">
+                    </a>
+                    <!-- Dropdown - User Information -->
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                         aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+
+            </ul>
+
+        </nav>
+
+       
+        <form method="POST" action="" enctype="multipart/form-data" class="form-tambah-foto">
                
 
-                <label for="judulFoto">Judul Foto:</label>
-                <input type="text" name="judulFoto" value="<?php  echo $row["JudulFoto"]; ?>">
+               <label for="judulFoto">Judul Foto:</label>
+               <input type="text" name="judulFoto" value="<?php  echo $row["JudulFoto"]; ?>">
 
-                <label for="deskripsiFoto">Deskripsi Foto:</label>
-                <textarea name="deskripsiFoto"><?php echo $row["DeskripsiFoto"]; ?></textarea>
+               <label for="deskripsiFoto">Deskripsi Foto:</label>
+               <textarea name="deskripsiFoto"><?php echo $row["DeskripsiFoto"]; ?></textarea>
 
-             
+            
 
 
 
-                <div class="form-group">
-                    <label for="AlbumID">Album:</label>
-                    <select class="form-control" name="albumID">
-                    <?php 
-                        foreach($datasalbum as $data):
-                    ?>
-                        <option value='<?= $data['AlbumID'] ?>'>
-                            <?= $data['NamaAlbum']; ?> 
-                        </option>
-                    <?php endforeach ?>
-                    </select>
-                </div>
+               <div class="form-group">
+                   <label for="AlbumID">Album:</label>
+                   <select class="form-control" name="albumID">
+                   <?php 
+                       foreach($datasalbum as $data):
+                   ?>
+                       <option value='<?= $data['AlbumID'] ?>'>
+                           <?= $data['NamaAlbum']; ?> 
+                       </option>
+                   <?php endforeach ?>
+                   </select>
+               </div>
+
+               
+               <input type="hidden" name="UserID" value="<?= $_SESSION['UserID'] ?>" readonly>
+               <img id="preview" src="../../img/<?php echo $fotoSebelumnya; ?>" width="100" height="100" alt="Preview Image">
+               <label class="form-label">Pilih Foto:</label>
+               <input type="file" class="form-control" name="gambar" onchange="previewImage(event);">
 
                 
-                <input type="hidden" name="UserID" value="<?= $_SESSION['UserID'] ?>" readonly>
-                <img id="preview" src="../../img/<?php echo $fotoSebelumnya; ?>" width="100" height="100" alt="Preview Image">
-                <label class="form-label">Pilih Foto:</label>
-                <input type="file" class="form-control" name="gambar" onchange="previewImage(event);">
+               <input type="submit" value="Edit Foto" style="background-color: blue; color: white;">
+           </form>
 
-                 
-                <input type="submit" value="Edit Foto" style="background-color: blue; color: white;">
-            </form>
+    <!-- End of Page Wrapper -->
 
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-            <script>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="../../dashboard/guset.php">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../../vendor/jquery/jquery.min.js"></script>
+    <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../../js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="../../vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../../js/demo/chart-area-demo.js"></script>
+    <script src="../../js/demo/chart-pie-demo.js"></script>
+
+    <script>
         // Fungsi untuk menampilkan pratinjau gambar saat memilih gambar baru
         function previewImage(event) {
             const input = event.target;
@@ -217,8 +314,6 @@ img{
             }
         }
     </script>
-                
 
-            </script>
 </body>
 </html>

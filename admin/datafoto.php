@@ -67,7 +67,7 @@ $datasfoto = ambilSemuaFoto();
             display: block;
         }
 
-        .dropdown {
+        .dropdown1 {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -138,6 +138,7 @@ $datasfoto = ambilSemuaFoto();
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+                    <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow">
@@ -154,6 +155,10 @@ $datasfoto = ambilSemuaFoto();
                                 <a class="dropdown-item" href="datauser.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Data User
+                                </a>
+                                <a class="dropdown-item" href="datalaporan.php">
+                                 <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Data Laporan
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="../logout.php" data-toggle="modal" data-target="#logoutModal">
@@ -201,7 +206,7 @@ $datasfoto = ambilSemuaFoto();
                 
                 <div class="gallery-item">
                     <img style="height:10em;object-fit:cover" src="../img/<?= $datafoto['LokasiFile'] ?>" alt="<?= $datafoto['JudulFoto'] ?>">
-                    <div class="dropdown">
+                    <div class="dropdown1">
         <span class="dropdown-icon" onclick="toggleDropdown(this)">&#8942;</span>
         <div class="dropdown-content">
         <a href="editfoto.php?FotoID=<?= $datafoto['FotoID'] ?>">Edit</a>

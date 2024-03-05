@@ -15,6 +15,8 @@ where foto.FotoID=$id");
 $data = mysqli_fetch_assoc($result);
 
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +44,15 @@ $data = mysqli_fetch_assoc($result);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
+     .navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* ensure the navbar is above other content */
+    }
+    #content {
+        margin-top: 50px; /* Adjust this value based on your navbar's height */
+    }
         body {
     font-family: 'Roboto Mono', monospace;
     background-color: #cbd5e0; /* You can change this color as needed */
@@ -390,7 +401,7 @@ $data = mysqli_fetch_assoc($result);
                         <a href='datafoto.php'>Foto</a>
                     </li>
                     <li class="nav-item">
-                        <a href='album.php'>Album</a>
+                        <a href='../album/album.php'>Album</a>
                     </li>
                 </ul>
 
@@ -588,11 +599,21 @@ $isUploader = ($currentUserID == $uploaderID);
         <?= mysqli_num_rows($getlike) ?> Likes
             <!-- Komentar Icon -->
 
+            <?php
+// Tambahkan kode berikut untuk menentukan apakah pengguna yang mengakses halaman adalah pengguna yang mengunggah foto atau pengguna lain
+$uploaderID = $data['UserID']; // ID pengguna yang mengunggah foto
+$currentUserID = $_SESSION["UserID"]; // ID pengguna yang sedang login
+$isUploader = ($currentUserID == $uploaderID);
 
-<?php 
-    $checkresult = mysqli_query($conn,"SELECT * FROM foto WHERE AlbumID <> 0 AND FotoID = $id");
+// Gunakan variabel $isUploader untuk menentukan jenis dropdown yang akan ditampilkan
+?>
+<?php if ($isUploader): ?>
+
+   <?php 
+    $checkresult = mysqli_query($conn,"SELECT * FROM foto WHERE AlbumID <> 0 AND FotoID = $id AND UserID = $userid");
     if(mysqli_num_rows($checkresult)>0){
 ?>
+
 <div class="" style="display: inline-block;">
     <form style="display:flex;flex-direction:row;justify-content:between" id="addToAlbumForm" method="post" action="prosesalbum.php">
         <!-- Input hidden untuk menyimpan ID foto -->
@@ -636,6 +657,14 @@ $isUploader = ($currentUserID == $uploaderID);
     </div>
 
 <?php } ?>
+<?php else: ?>
+    <!-- Dropdown untuk pengguna lain -->
+    <div class="dropdownfoto">
+        <ul>
+            <li><a href="#">Report</a></li>
+        </ul>
+    </div>
+<?php endif; ?>
 
 
 
@@ -736,6 +765,24 @@ $isUploader = ($currentUserID == $uploaderID);
             </div>
         </div>
     </div>
+
+        
+    <script>
+    // Function to scroll to the top of the page smoothly
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Adding click event listener to the scroll-to-top button
+    document.querySelector('.scroll-to-top').addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default behavior of anchor link
+        scrollToTop(); // Call the scrollToTop function
+    });
+</script>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="../../vendor/jquery/jquery.min.js"></script>

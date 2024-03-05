@@ -10,16 +10,26 @@ if (!isset($_GET['UserID'])) {
 
 $userID = $_GET['UserID'];
 
-// Delete user from database
-$sql = "DELETE FROM user WHERE UserID = $userID";
+// Delete user's photos/albums from the database
+$sql_delete_photos = "DELETE FROM foto WHERE UserID = $userID";
+$sql_delete_albums = "DELETE FROM album WHERE UserID = $userID";
 
-if (mysqli_query($conn, $sql)) {
-    // Redirect to datauser.php after successful deletion
-    header("Location: datauser.php?success=true");
-    exit();
+// Execute the deletion queries
+if (mysqli_query($conn, $sql_delete_photos) && mysqli_query($conn, $sql_delete_albums)) {
+    // Proceed with deleting the user if the photos/albums deletion was successful
+    $sql_delete_user = "DELETE FROM user WHERE UserID = $userID";
+
+    if (mysqli_query($conn, $sql_delete_user)) {
+        // Redirect to datauser.php after successful deletion
+        header("Location: datauser.php?success=true");
+        exit();
+    } else {
+        echo "Error deleting user: " . mysqli_error($conn);
+    }
 } else {
-    echo "Error deleting user: " . mysqli_error($conn);
+    echo "Error deleting photos/albums: " . mysqli_error($conn);
 }
 
 mysqli_close($conn);
+
 ?>

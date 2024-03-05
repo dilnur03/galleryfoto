@@ -40,12 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query = "INSERT INTO user (username, password, email, Nama_Lengkap, Alamat, role) VALUES ('$username', '$hashed_password', '$email', '$Nama_Lengkap', '$Alamat', '$role')";
         $result = $conn->query($query);
 
-        if ($result) {
-            echo "Registration successful. You can now <a href='login.php'>login</a>.";
-        } else {
-            echo "Registration failed. Please try again.";
-        }
-
+      
         $conn->close();
     }
 }
@@ -53,11 +48,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Registration | Gallery</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Guest</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
     <style>
         body {
             background-image: url('foto2.jpg');
@@ -74,60 +84,154 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 400px;
             margin: auto;
         }
+
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000; /* ensure the navbar is above other content */
+        }
+
+        #content {
+            margin-top: 100px; /* Adjust this value based on your navbar's height */
+        }
     </style>
+
+
 </head>
-<body>
-    <div class="container registration-container">
-        <div class="card registration-card">
-            <div class="card-body">
-                <h5 class="card-title text-center">Registration</h5>
 
-                <!-- Tampilkan pesan kesalahan di atas formulir -->
-                <?php if (!empty($username_error) || !empty($email_error)): ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?php echo $username_error; ?>
-                        <?php echo $email_error; ?>
-                    </div>
-                <?php endif; ?>
+<body id="page-top">
+    <!-- Content Wrapper -->
+    <div id="content-wrapper">
 
-                <form action="" method="post" id="registration-form">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="full_name">Full Name</label>
-                        <input type="text" class="form-control" id="full_name" name="full_name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
-                    </div>
-                    <div class="form-group" style="display:none">
-                        <label for="role">Role</label>
-                        <input name="role" value="user" />
-                    </div>
-                    <button type="submit" name="register" class="btn btn-primary btn-block">Register</button>
-                </form>
+        <!-- Main Content -->
+        <div id="content">
 
-                <p class="mt-3 mb-1 text-center">
-                    <i class="fa fa-user"></i>
-                    <a href="login.php">Already have an account? Login</a>
-                </p>
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Gallery Title -->
+                <h2 class="gallery-title text-primary">Gallery Foto</h2>
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                    <li class="nav-item dropdown no-arrow d-sm-none">
+                        <!-- Search Form -->
+                    </li>
+
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
+                    <div class="hidden md:flex items-center space-x-1">
+                        <a href="login.php" class="py-5 px-3">Login</a>
+                        <a href="registrasi.php"
+                            class="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 hover:text-yellow-800 rounded transition duration-300">Signup</a>
+                    </div>
+
+                </ul>
+            </nav>
+            <!-- End of Topbar -->
+
+          
+
+            <!-- Registration Successful Notification -->
+         <!-- Registration Successful Notification -->
+<?php 
+    $result = isset($result) ? $result : false; // Set nilai awal variabel $result
+    if ($result !== false): ?>
+    <div class="alert alert-success" role="alert">
+        Registration successful. You can now <a href='login.php'>login</a>.
+    </div>
+<?php endif; ?>
+
+
+            <!-- Registration Form -->
+            <div class="container registration-container">
+                <div class="card registration-card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Registration</h5>
+                        <!-- Registration Form Content -->
+                        <!-- Tampilkan pesan kesalahan di atas formulir -->
+                        <?php if (!empty($username_error) || !empty($email_error)): ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?php echo $username_error; ?>
+                                <?php echo $email_error; ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <form action="" method="post" id="registration-form">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="full_name">Full Name</label>
+                                <input type="text" class="form-control" id="full_name" name="full_name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group" style="display:none">
+                                <label for="role">Role</label>
+                                <input name="role" value="user" />
+                            </div>
+                            <button type="submit" name="register" class="btn btn-primary btn-block">Register</button>
+                        </form>
+
+                        <p class="mt-3 mb-1 text-center">
+                            <i class="fa fa-user"></i>
+                            <a href="login.php">Already have an account? Login</a>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
+        <!-- End of Content -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <!-- Modal Content -->
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+
 </body>
+
 </html>

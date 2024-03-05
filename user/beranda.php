@@ -37,6 +37,7 @@ $result = mysqli_query($conn, $sql);
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <style>
+        
     .photo-container {
         width: 100%;
         columns: 5;
@@ -65,7 +66,15 @@ $result = mysqli_query($conn, $sql);
     .photo-item:hover img {
         transform: scale(1.1);
     }
-
+    .navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* ensure the navbar is above other content */
+    }
+    #content {
+        margin-top: 100px; /* Adjust this value based on your navbar's height */
+    }
 
 </style>
 
@@ -114,9 +123,11 @@ $result = mysqli_query($conn, $sql);
                         </div>
                     </div>
                 </form>
+                
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
+                <div class="topbar-divider d-none d-sm-block"></div>
 
                     <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                     <li class="nav-item dropdown no-arrow">
@@ -197,6 +208,23 @@ $result = mysqli_query($conn, $sql);
                 </div>
             </div>
         </div>
+
+        <script>
+    // Function to scroll to the top of the page smoothly
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Adding click event listener to the scroll-to-top button
+    document.querySelector('.scroll-to-top').addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default behavior of anchor link
+        scrollToTop(); // Call the scrollToTop function
+    });
+</script>
+
 
         <!-- Bootstrap core JavaScript-->
         <script src="../vendor/jquery/jquery.min.js"></script>
